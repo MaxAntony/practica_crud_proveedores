@@ -1,27 +1,39 @@
-const provider = {};
+const fs = require('fs-extra');
+const providerCtrl = {};
 const Provider = require('../models/Provide.model');
 const cloudinary = require('../config/cloudinary.config');
 
-provider.getProviders = async (req, res) => {
+providerCtrl.getProviders = async (req, res) => {
   const allProviders = await Provider.find();
   res.json(allProviders);
 };
 
-provider.addProvider = async (req, res) => {
-  const { firstName, lastName, dni, photo } = req.body;
+providerCtrl.addProvider = async (req, res) => {
+  const { firstName, lastName, dni } = req.body;
 
   try {
-    const newProvider = new Provider({ firstName, lastName, dni, photo });
+    const uploadResult = await cloudinary.v2.uploader.upload(req.file.path, {
+      folder: 'ProvidersPeruSoftPractice',
+    });
+    const newProvider = new Provider({
+      firstName,
+      lastName,
+      dni,
+      photo: {
+        imageURL: uploadResult.secure_url,
+        public_id: uploadResult.public_id,
+      },
+    });
     await newProvider.save();
+    await fs.unlink(req.file.path);
     res.json({ status: 'added successfully' });
   } catch (e) {
     console.log(e);
     res.status(500).json(e);
   }
-  console.log(req.body);
 };
 
-provider.deleteProvider = async (req, res) => {
+providerCtrl.deleteProvider = async (req, res) => {
   const { id } = req.params;
   try {
     const deletedProvider = await Provider.findByIdAndDelete(id);
@@ -32,9 +44,10 @@ provider.deleteProvider = async (req, res) => {
   }
 };
 
-provider.updateProvider = async (req, res) => {
+providerCtrl.updateProvider = async (req, res) => {
   const { id } = req.params;
   const { firstName, lastName, dni, photo } = req.body;
+  console.log(req.body);
   try {
     const updatedProvider = await Provider.findByIdAndUpdate(id, {
       firstName,
@@ -48,4 +61,4 @@ provider.updateProvider = async (req, res) => {
   }
 };
 
-module.exports = provider;
+module.exports = providerCtrl;
