@@ -9,6 +9,7 @@ providerCtrl.getProviders = async (req, res) => {
 };
 
 providerCtrl.addProvider = async (req, res) => {
+  console.log(req.body);
   const { firstName, lastName, dni } = req.body;
 
   try {
