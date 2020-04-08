@@ -4,12 +4,15 @@ const Provider = require('../models/Provide.model');
 const cloudinary = require('../config/cloudinary.config');
 
 providerCtrl.getProviders = async (req, res) => {
-  const allProviders = await Provider.find();
+  let allProviders = [];
+  allProviders = await Provider.find();
+  allProviders.reverse();
   res.json(allProviders);
 };
 
 providerCtrl.addProvider = async (req, res) => {
   console.log(req.body);
+  console.log(req.file);
   const { firstName, lastName, dni } = req.body;
 
   try {
