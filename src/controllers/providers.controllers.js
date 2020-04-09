@@ -65,7 +65,13 @@ providerCtrl.updateProvider = async (req, res) => {
   const { id } = req.params;
   const { firstName, lastName, dni, photo } = req.body;
   try {
-    if (photo !== 'undefined') {
+    if (photo === 'undefined') {
+      const updatedProvider = await Provider.findByIdAndUpdate(id, {
+        firstName,
+        lastName,
+        dni,
+      });
+    } else {
       const uploadResult = await cloudinary.v2.uploader.upload(req.file.path, {
         folder: 'ProvidersPeruSoftPractice',
       });
@@ -77,12 +83,6 @@ providerCtrl.updateProvider = async (req, res) => {
           imageURL: uploadResult.secure_url,
           public_id: uploadResult.public_id,
         },
-      });
-    } else {
-      const updatedProvider = await Provider.findByIdAndUpdate(id, {
-        firstName,
-        lastName,
-        dni,
       });
     }
 
