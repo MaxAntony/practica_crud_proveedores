@@ -64,7 +64,7 @@ providerCtrl.deleteProvider = async (req, res) => {
 providerCtrl.updateProvider = async (req, res) => {
   const { id } = req.params;
   const { firstName, lastName, dni, photo } = req.body;
-  console.log(photo);
+  console.log(typeof photo);
   try {
     if (photo) {
       const uploadResult = await cloudinary.v2.uploader.upload(req.file.path, {
