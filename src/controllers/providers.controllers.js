@@ -72,6 +72,7 @@ providerCtrl.updateProvider = async (req, res) => {
         dni,
       });
     } else {
+      console.log('imagen');
       const uploadResult = await cloudinary.v2.uploader.upload(req.file.path, {
         folder: 'ProvidersPeruSoftPractice',
       });
