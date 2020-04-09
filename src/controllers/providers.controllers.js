@@ -65,7 +65,7 @@ providerCtrl.updateProvider = async (req, res) => {
   const { id } = req.params;
   const { firstName, lastName, dni, photo } = req.body;
   try {
-    if (photo === 'undefined') {
+    if (photo !== 'undefined') {
       const uploadResult = await cloudinary.v2.uploader.upload(req.file.path, {
         folder: 'ProvidersPeruSoftPractice',
       });
