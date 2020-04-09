@@ -89,6 +89,7 @@ providerCtrl.updateProvider = async (req, res) => {
     res.json(updatedProvider);
   } catch (e) {
     res.status(500).json(e);
+    console.log(e);
   }
 };
 
