@@ -53,6 +53,7 @@ providerCtrl.addProvider = async (req, res) => {
 providerCtrl.deleteProvider = async (req, res) => {
   const { id } = req.params;
   try {
+    // TODO: eliminar imagen de cloudinary
     const deletedProvider = await Provider.findByIdAndDelete(id);
     res.json({ status: 'ok', deletedProvider });
     // BUG: si el id no existe todo se realizara correctamente pero deletedProvider valdra null
