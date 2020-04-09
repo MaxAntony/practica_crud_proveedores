@@ -64,9 +64,8 @@ providerCtrl.deleteProvider = async (req, res) => {
 providerCtrl.updateProvider = async (req, res) => {
   const { id } = req.params;
   const { firstName, lastName, dni, photo } = req.body;
-  console.log(typeof photo);
   try {
-    if (photo) {
+    if (photo === 'undefined') {
       const uploadResult = await cloudinary.v2.uploader.upload(req.file.path, {
         folder: 'ProvidersPeruSoftPractice',
       });
