@@ -4,10 +4,23 @@ const Provider = require('../models/Provide.model');
 const cloudinary = require('../config/cloudinary.config');
 
 providerCtrl.getProviders = async (req, res) => {
-  let allProviders = [];
-  allProviders = await Provider.find();
-  allProviders.reverse();
-  res.json(allProviders);
+  try {
+    const allProviders = await Provider.find();
+    allProviders.reverse();
+    res.json(allProviders);
+  } catch (e) {
+    res.status(500).json(e);
+  }
+};
+
+providerCtrl.getProvider = async (req, res) => {
+  try {
+    let providerId = req.params.id;
+    const provider = await Provider.findById(providerId);
+    res.json(provider);
+  } catch (e) {
+    res.status(500).json(e);
+  }
 };
 
 providerCtrl.addProvider = async (req, res) => {
