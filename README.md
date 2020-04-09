@@ -9,4 +9,3 @@
 - Llamar a esos APIs desde un pequenio formulario una pagina que contenga esas 3 opcciones.
 
 3. Un Html con un poco javascript para hacer peticiones.
-4. Esto es un hito. (Para miercoles a las 9am.)
