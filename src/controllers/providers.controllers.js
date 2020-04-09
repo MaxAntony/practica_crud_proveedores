@@ -71,6 +71,7 @@ providerCtrl.updateProvider = async (req, res) => {
         lastName,
         dni,
       });
+      res.json(updatedProvider);
     } else {
       console.log('imagen');
       const uploadResult = await cloudinary.v2.uploader.upload(req.file.path, {
@@ -85,9 +86,8 @@ providerCtrl.updateProvider = async (req, res) => {
           public_id: uploadResult.public_id,
         },
       });
+      res.json(updatedProvider);
     }
-
-    res.json(updatedProvider);
   } catch (e) {
     res.status(500).json(e);
     console.log(e);
